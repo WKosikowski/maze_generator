@@ -23,4 +23,4 @@ class Node:
     #     self.rightNode = node
 
     def __str__(self):
-        return '(' + f'{self.posX}' + ',' + f'{self.posY}' + ')'
+        return '(' + f'{self.posX}' + ',' + f'{self.posY}' + ' ' + f'{self.rightNode is not None}' + ' ' + f'{self.downNode is not None}' + ')'

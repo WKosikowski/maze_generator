@@ -20,7 +20,7 @@ class Maze:
 
     def randomise(self, y, x):
 
-        randList: [Node] = []
+        randList = []
         if x > 0:
             if not self.maze[y][x - 1].visited:
                 randList.append("Left")
@@ -29,11 +29,11 @@ class Maze:
             if not self.maze[y - 1][x].visited:
                 randList.append("Up")
 
-        if x + 1 < self.width:
+        if x < self.width - 1:
             if not self.maze[y][x + 1].visited:
                 randList.append("Right")
 
-        if y + 1 < self.height:
+        if y < self.height - 1:
             if not self.maze[y + 1][x].visited:
                 randList.append("Down")
 
@@ -49,21 +49,19 @@ class Maze:
 
     def link(self, direction, yOrigin, xOrigin):
         if direction == "Right":
-            self.maze[yOrigin][xOrigin].rigthNode = self.maze[yOrigin][xOrigin + 1]
+            self.maze[yOrigin][xOrigin].rightNode = self.maze[yOrigin][xOrigin + 1]
             self.maze[yOrigin][xOrigin + 1].leftNode = self.maze[yOrigin][xOrigin]
-            print("movedTo " + "Right")
         if direction == "Left":
             self.maze[yOrigin][xOrigin].leftNode = self.maze[yOrigin][xOrigin - 1]
             self.maze[yOrigin][xOrigin - 1].rightNode = self.maze[yOrigin][xOrigin]
-            print("movedTo " + "Left")
-        if direction == "Down":
-            self.maze[yOrigin][xOrigin].downNode = self.maze[yOrigin + 1][xOrigin]
-            self.maze[yOrigin + 1][xOrigin].upNode = self.maze[yOrigin][xOrigin]
-            print("movedTo " + "Down")
+            print("moved left")
         if direction == "Up":
             self.maze[yOrigin][xOrigin].upNode = self.maze[yOrigin - 1][xOrigin]
             self.maze[yOrigin - 1][xOrigin].downNode = self.maze[yOrigin][xOrigin]
-            print("movedTo " + "Up")
+        if direction == "Down":
+            self.maze[yOrigin][xOrigin].downNode = self.maze[yOrigin + 1][xOrigin]
+            self.maze[yOrigin + 1][xOrigin].upNode = self.maze[yOrigin][yOrigin]
+
 
     def generate(self):
         self.history.append(self.maze[self.STARTY][self.STARTX])
