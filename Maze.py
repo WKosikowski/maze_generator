@@ -51,16 +51,19 @@ class Maze:
         if direction == "Right":
             self.maze[yOrigin][xOrigin].rightNode = self.maze[yOrigin][xOrigin + 1]
             self.maze[yOrigin][xOrigin + 1].leftNode = self.maze[yOrigin][xOrigin]
+            print("movedTo " + "Right")
         if direction == "Left":
             self.maze[yOrigin][xOrigin].leftNode = self.maze[yOrigin][xOrigin - 1]
             self.maze[yOrigin][xOrigin - 1].rightNode = self.maze[yOrigin][xOrigin]
-            print("moved left")
+            print("movedTo " + "Left")
+        if direction == "Down":
+            self.maze[yOrigin][xOrigin].downNode = self.maze[yOrigin + 1][xOrigin]
+            self.maze[yOrigin + 1][xOrigin].upNode = self.maze[yOrigin][xOrigin]
+            print("movedTo " + "Down")
         if direction == "Up":
             self.maze[yOrigin][xOrigin].upNode = self.maze[yOrigin - 1][xOrigin]
             self.maze[yOrigin - 1][xOrigin].downNode = self.maze[yOrigin][xOrigin]
-        if direction == "Down":
-            self.maze[yOrigin][xOrigin].downNode = self.maze[yOrigin + 1][xOrigin]
-            self.maze[yOrigin + 1][xOrigin].upNode = self.maze[yOrigin][yOrigin]
+            print("movedTo " + "Up")
 
 
     def generate(self):
