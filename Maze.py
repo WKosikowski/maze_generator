@@ -9,7 +9,8 @@ class Maze:
         self.STARTX = startX
         self.STARTY = startY
         self.maze = []
-        self.history: [Node] = []
+        self.history = []
+        self.path = []
 
         for y in range(0, self.height):
             row = []
@@ -127,20 +128,14 @@ class Maze:
             nextNode = self.randomise(current)
             if nextNode != None:
                 self.link(nextNode, current)
-                # if nextNode == "Up":
-                #     currentY -= 1
-                # elif nextNode == "Left":
-                #     currentX -= 1
-                # elif nextNode == "Down":
-                #     currentY += 1
-                # elif nextNode == "Right":
-                #     currentX += 1
-                # self.link(nextNode, currentY, currentX)
+
                 self.history.append(nextNode)
+                if self.history[len(self.history) - 1].posX == self.width - 1 and self.history[len(self.history) - 1].posY == self.height - 1:
+                    self.path = self.history.copy()
+                    print("path assigned" ,f'{self.path}')
                 # self.history.append(self.maze[currentY][currentX])
             else:
-                if len(self.history) > 0:
-                    del self.history[len(self.history) - 1]
+                self.history.remove(current)
 
     def __str__(self) -> str:
         text = 'Maze:[\n'

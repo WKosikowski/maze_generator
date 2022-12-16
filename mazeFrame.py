@@ -9,6 +9,7 @@ class MazeFrame(Frame):
         super().__init__()
         self.OFFSET = 30
         self.NODE_SIZE = 20
+        self.PATHOFFSET = self.OFFSET + self.NODE_SIZE / 2
         self.initUI(maze)
 
     def initUI(self, maze):
@@ -24,7 +25,12 @@ class MazeFrame(Frame):
                     canvas.create_line((self.OFFSET + (x + 1) * self.NODE_SIZE), (self.OFFSET + y * self.NODE_SIZE), (self.OFFSET + (x + 1) * self.NODE_SIZE), (self.OFFSET + (y + 1) * self.NODE_SIZE))
                 if maze.maze[y][x].downNode == None:
                     canvas.create_line((self.OFFSET + x * self.NODE_SIZE), (self.OFFSET + (y + 1) * self.NODE_SIZE), (self.OFFSET + (x + 1) * self.NODE_SIZE), (self.OFFSET + (y + 1) * self.NODE_SIZE))
-
+        lineFromNode = maze.path[0]
+        for i in maze.path:
+            if i is not lineFromNode:
+                canvas.create_line((self.PATHOFFSET + (lineFromNode.posX )  * self.NODE_SIZE), (self.PATHOFFSET + lineFromNode.posY * self.NODE_SIZE),
+                                   (self.PATHOFFSET + (i.posX ) * self.NODE_SIZE), (self.PATHOFFSET + (i.posY) * self.NODE_SIZE), fill='red')
+                lineFromNode = i
         canvas.pack(fill=BOTH, expand=1)
 
 
