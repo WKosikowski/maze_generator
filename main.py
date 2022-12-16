@@ -1,8 +1,8 @@
 from mazeFrame import MazeFrame
 from tkinter import Tk
 from Maze import Maze
-XBOUND =45
-YBOUND = 52
+XBOUND =5
+YBOUND = 5
 STARTY = 0
 STARTX = 0
 

@@ -130,12 +130,46 @@ class Maze:
                 self.link(nextNode, current)
 
                 self.history.append(nextNode)
-                if self.history[len(self.history) - 1].posX == self.width - 1 and self.history[len(self.history) - 1].posY == self.height - 1:
-                    self.path = self.history.copy()
-                    print("path assigned" ,f'{self.path}')
+                # if self.history[len(self.history) - 1].posX == self.width - 1 and self.history[len(self.history) - 1].posY == self.height - 1:
+                #     self.path = self.history.copy()
+                #     print("path assigned" ,f'{self.path}')
                 # self.history.append(self.maze[currentY][currentX])
             else:
                 self.history.remove(current)
+        self.path = self.findPath(4,4)
+
+
+    def findNeighbours(self, node):
+        if node.upNode != None:
+            if node.upNode.visited == True:
+                node.upNode.visited = False
+                return node.upNode
+        if node.downNode != None:
+            if node.downNode.visited == True:
+                node.downNode.visited = False
+                return node.downNode
+        if node.rightNode != None:
+            if node.rightNode.visited == True:
+                node.rightNode.visited = False
+                return node.rightNode
+        if node.leftNode != None:
+            if node.leftNode.visited == True:
+                node.leftNode.visited = False
+                return node.leftNode
+        return None
+
+    def findPath(self, findX, findY):
+        current = self.maze[self.STARTY][self.STARTX]
+        pastNodes = [self.maze[self.STARTY][self.STARTX]]
+        while current.posX != findX or current.posY != findY:
+            nextNode = self.findNeighbours(current)
+            if nextNode != None:
+                pastNodes.append(nextNode)
+                current = nextNode
+            else:
+                pastNodes.remove(current)
+                current = pastNodes[len(pastNodes) - 1]
+        return pastNodes
 
     def __str__(self) -> str:
         text = 'Maze:[\n'
