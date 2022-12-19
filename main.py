@@ -11,10 +11,7 @@ STARTX = 0
 def main():
     maze = Maze(YBOUND, XBOUND, STARTY, STARTX)
     maze.generate()
-    # for i in range(0, 5):
-    #     # maze.maze[i][0].setDownNode(maze.maze[i+1][0])
-    #     maze.maze[i][0].rightNode = maze.maze[i][1]
-    # print(maze)
+
 
     root = Tk()
     ex = MazeFrame(maze)

@@ -10,17 +10,6 @@ class Node:
         self.downNode = None
 
 
-    # def setUpNode(self, node):
-    #     self.upNode = node
-    #
-    # def setDownNode(self, node):
-    #     self.downNode = node
-    #
-    # def setLeftNode(self, node):
-    #     self.leftNode = node
-    #
-    # def setRightNode(self, node):
-    #     self.rightNode = node
 
     def __str__(self):
         return '(' + f'{self.posX}' + ',' + f'{self.posY}' + ' ' + f'{self.rightNode is not None}' + ' ' + f'{self.downNode is not None}' + ')'
