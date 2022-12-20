@@ -1,25 +1,24 @@
 import random
-from Node import Node
+from Tile import Tile
 
 
 class Maze:
-    def __init__(self, yBound, xBound, startY, startX):
+    def __init__(self, yBound = 25, xBound = 25, startY = 0, startX = 0):
         self.height = yBound
         self.width = xBound
         self.STARTX = startX
         self.STARTY = startY
         self.maze = []
-        self.history = []
         self.path = []
 
         for y in range(0, self.height):
             row = []
             for x in range(0, self.width):
-                row.append(Node(y, x))
+                row.append(Tile(y, x))
             self.maze.append(row)
         print(self.maze)
 
-    def randomise(self, node):
+    def get_unvisited_neighbour(self, node):
 
         randList = []
         if node.posX > 0:
@@ -72,57 +71,39 @@ class Maze:
 
 
     def generate(self):
-        self.history.append(self.maze[self.STARTY][self.STARTX])
+        self.path.append(self.maze[self.STARTY][self.STARTX])
         i = 0
-        while len(self.history) > 0:
-            current = self.history[len(self.history) - 1]
+        while len(self.path) > 0:
+            current = self.path[len(self.path) - 1]
             current.visited = True
-            currentY = current.posY
-            currentX = current.posX
+            current_y = current.posY
+            current_x = current.posX
             i = i + 1
-            print(i, currentX, currentY)
-            nextNode = self.randomise(current)
+            print(i, current_x, current_y)
+            nextNode = self.get_unvisited_neighbour(current)
             if nextNode != None:
                 self.link(nextNode, current)
 
-                self.history.append(nextNode)
+                self.path.append(nextNode)
 
             else:
-                self.history.remove(current)
-        self.path = self.findPath(4,4)
+                self.path.remove(current)
 
 
-    def findNeighbours(self, node):
-        if node.upNode != None:
-            if node.upNode.visited == True:
-                node.upNode.visited = False
-                return node.upNode
-        if node.downNode != None:
-            if node.downNode.visited == True:
-                node.downNode.visited = False
-                return node.downNode
-        if node.rightNode != None:
-            if node.rightNode.visited == True:
-                node.rightNode.visited = False
-                return node.rightNode
-        if node.leftNode != None:
-            if node.leftNode.visited == True:
-                node.leftNode.visited = False
-                return node.leftNode
-        return None
 
-    def findPath(self, findX, findY):
+
+    def find_path(self, findX, findY):
         current = self.maze[self.STARTY][self.STARTX]
-        pastNodes = [self.maze[self.STARTY][self.STARTX]]
+        past_nodes = [self.maze[self.STARTY][self.STARTX]]
         while current.posX != findX or current.posY != findY:
-            nextNode = self.findNeighbours(current)
-            if nextNode != None:
-                pastNodes.append(nextNode)
-                current = nextNode
+            next_node = current.get_neighbours(current)
+            if next_node is not None:
+                past_nodes.append(next_node)
+                current = next_node
             else:
-                pastNodes.remove(current)
-                current = pastNodes[len(pastNodes) - 1]
-        return pastNodes
+                past_nodes.remove(current)
+                current = past_nodes[len(past_nodes) - 1]
+        self.path = past_nodes
 
     def __str__(self) -> str:
         text = 'Maze:[\n'

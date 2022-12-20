@@ -1,6 +1,6 @@
 from tkinter import Canvas, Frame, BOTH
 from Maze import Maze
-from Node import Node
+from Tile import Tile
 
 class MazeFrame(Frame):
 
@@ -13,10 +13,13 @@ class MazeFrame(Frame):
         self.initUI(maze)
 
     def initUI(self, maze):
-        self.master.title("Lines")
+        self.master.title("Maze")
         self.pack(fill=BOTH, expand=10)
         canvas = Canvas(self)
-        canvas.create_line(30, 30, 30 + maze.width * 20, 30, 30 + maze.width * 20, 30 + maze.height * 20, 30, 30 + maze.height * 20, 30, 30)
+        canvas.create_line(self.OFFSET, self.OFFSET,
+                           self.OFFSET + maze.width * self.NODE_SIZE, self.OFFSET,
+                           self.OFFSET + maze.width * self.NODE_SIZE, self.OFFSET + maze.height * self.NODE_SIZE,
+                           self.OFFSET, self.OFFSET + maze.height * self.NODE_SIZE, self.OFFSET, self.OFFSET)
 
         for y in range(0, maze.height):
             for x in range(0, maze.width):
