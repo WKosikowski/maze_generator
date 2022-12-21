@@ -23,7 +23,7 @@ class MazeFrame(Frame):
 
         for y in range(0, maze.height):
             for x in range(0, maze.width):
-                print(maze.maze[y][x])
+                # print(maze.maze[y][x])
                 if maze.maze[y][x].rightNode == None :
                     canvas.create_line((self.OFFSET + (x + 1) * self.NODE_SIZE), (self.OFFSET + y * self.NODE_SIZE), (self.OFFSET + (x + 1) * self.NODE_SIZE), (self.OFFSET + (y + 1) * self.NODE_SIZE))
                 if maze.maze[y][x].downNode == None:
