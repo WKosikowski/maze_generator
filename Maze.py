@@ -3,65 +3,61 @@ from Tile import Tile
 
 
 class Maze:
-    def __init__(self, yBound = 5, xBound = 5, startY = 0, startX = 0):
-        self.height = yBound
-        self.width = xBound
-        self.STARTX = startX
-        self.STARTY = startY
+    def __init__(self, height=5, width=5, start_y=0, start_x=0):
+        self.height = height
+        self.width = width
+        self.STARTX = start_x
+        self.STARTY = start_y
         self.maze = []
         self.path = []
 
-
-
-
     def get_unvisited_neighbour(self, node):
 
-        randList = []
+        rand_list = []
         if node.posX > 0:
             if not self.maze[node.posY][node.posX - 1].visited:
-                randList.append(self.maze[node.posY][node.posX - 1])
+                rand_list.append(self.maze[node.posY][node.posX - 1])
 
         if node.posY > 0:
             if not self.maze[node.posY - 1][node.posX].visited:
-                randList.append(self.maze[node.posY - 1][node.posX])
+                rand_list.append(self.maze[node.posY - 1][node.posX])
 
         if node.posX < self.width - 1:
             if not self.maze[node.posY][node.posX + 1].visited:
-                randList.append(self.maze[node.posY][node.posX + 1])
+                rand_list.append(self.maze[node.posY][node.posX + 1])
 
         if node.posY < self.height - 1:
             if not self.maze[node.posY + 1][node.posX].visited:
-                randList.append(self.maze[node.posY + 1][node.posX])
+                rand_list.append(self.maze[node.posY + 1][node.posX])
 
-        if len(randList) == 1:
-            return randList[0]
-        elif len(randList) > 1:
-            randNum = random.randint(0, len(randList) - 1)
+        if len(rand_list) == 1:
+            return rand_list[0]
+        elif len(rand_list) > 1:
+            rand_num = random.randint(0, len(rand_list) - 1)
 
-            returning = randList[randNum]
+            returning = rand_list[rand_num]
             return returning
         else:
             return None
 
-
-    def link(self, nextNode, originNode):
-        if originNode.posX == nextNode.posX:
-            if originNode.posY < nextNode.posY:
-                originNode.downNode = nextNode
-                nextNode.upNode = originNode
+    def link(self, next_node, origin_node):
+        if origin_node.posX == next_node.posX:
+            if origin_node.posY < next_node.posY:
+                origin_node.down_node = next_node
+                next_node.upNode = origin_node
                 # print("movedTo " + "Down")
-            elif originNode.posY > nextNode.posY:
-                originNode.upNode = nextNode
-                nextNode.downNode = originNode
+            elif origin_node.posY > next_node.posY:
+                origin_node.upNode = next_node
+                next_node.down_node = origin_node
                 # print("movedTo " + "Up")
-        elif originNode.posY == nextNode.posY:
-            if originNode.posX < nextNode.posX:
-                originNode.rightNode = nextNode
-                nextNode.leftNode = originNode
+        elif origin_node.posY == next_node.posY:
+            if origin_node.posX < next_node.posX:
+                origin_node.rightNode = next_node
+                next_node.leftNode = origin_node
                 # print("movedTo " + "Right")
-            if originNode.posX > nextNode.posX:
-                originNode.leftNode = nextNode
-                nextNode.rightNode = originNode
+            if origin_node.posX > next_node.posX:
+                origin_node.leftNode = next_node
+                next_node.rightNode = origin_node
                 # print("movedTo " + "Left")
 
     def reset(self):
@@ -82,26 +78,21 @@ class Maze:
         while len(self.path) > 0:
             current = self.path[len(self.path) - 1]
             current.visited = True
-            current_y = current.posY
-            current_x = current.posX
+            # current_y = current.posY
+            # current_x = current.posX
             i = i + 1
             # print(i, current_x, current_y)
-            nextNode = self.get_unvisited_neighbour(current)
-            if nextNode != None:
-                self.link(nextNode, current)
-
-                self.path.append(nextNode)
-
+            next_node = self.get_unvisited_neighbour(current)
+            if next_node is not None:
+                self.link(next_node, current)
+                self.path.append(next_node)
             else:
                 self.path.remove(current)
 
-
-
-
-    def find_path(self, findX, findY):
+    def find_path(self, find_x, find_y):
         current = self.maze[self.STARTY][self.STARTX]
         past_nodes = [self.maze[self.STARTY][self.STARTX]]
-        while current.posX != findX or current.posY != findY:
+        while current.posX != find_x or current.posY != find_y:
             next_node = current.get_neighbours(current)
             if next_node is not None:
                 past_nodes.append(next_node)

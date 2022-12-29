@@ -7,18 +7,17 @@ class Tile:
         self.upNode = None
         self.rightNode = None
         self.leftNode = None
-        self.downNode = None
-
+        self.down_node = None
 
     def get_neighbours(self, tile):
         if tile.upNode is not None:
             if tile.upNode.visited:
                 tile.upNode.visited = False
                 return tile.upNode
-        if tile.downNode is not None:
-            if tile.downNode.visited:
-                tile.downNode.visited = False
-                return tile.downNode
+        if tile.down_node is not None:
+            if tile.down_node.visited:
+                tile.down_node.visited = False
+                return tile.down_node
         if tile.rightNode is not None:
             if tile.rightNode.visited:
                 tile.rightNode.visited = False
@@ -30,4 +29,4 @@ class Tile:
         return None
 
     def __str__(self):
-        return '(' + f'{self.posX}' + ',' + f'{self.posY}' + ' ' + f'{self.rightNode is not None}' + ' ' + f'{self.downNode is not None}' + ')'
+        return '(' + f'{self.posX}' + ',' + f'{self.posY}' + ' ' + f'{self.rightNode is not None}' + ' ' + f'{self.down_node is not None}' + ')'
